@@ -21,8 +21,8 @@ chroma_client = chromadb.PersistentClient(path="./chroma_db")
 collection = chroma_client.get_or_create_collection(name="comments_collection")
 
 class BusquedaRequest(BaseModel):
-    texto: str  
-    categoria: Optional[str] = None 
+    text: str  
+    category: Optional[str] = None 
 
 class ProductCreate(BaseModel):
     title: str
@@ -31,45 +31,51 @@ class ProductCreate(BaseModel):
     comment: str
     #ubicacion: str
     user_id: str
-
-
-mis_documentos = [
-    "El perro corre rápido por el parque.",
-    "La inteligencia artificial está transformando el mundo.",
-    "Receta para hacer un pastel de chocolate.",
-    "Noticias sobre la economía global."
-]
-mis_ids = ["doc_perro", "doc_ia", "doc_pastel", "doc_economia"]
-
-mis_metadatos = [
-    {"categoria": "naturaleza", "fuente": "blog"},
-    {"categoria": "tecnologia", "fuente": "articulo"},
-    {"categoria": "cocina", "fuente": "recetario"},
-    {"categoria": "finanzas", "fuente": "noticia"}
-]
-
-mis_embeddings = model.encode(mis_documentos)
-
-embeddings_listos_para_chroma = mis_embeddings.tolist()
-
-collection.add(
-    embeddings=embeddings_listos_para_chroma, # <-- Tus vectores
-    documents=mis_documentos,                  # <-- El texto original (para referencia)
-    metadatas=mis_metadatos,               # <-- Metadatos asociados
-    ids=mis_ids                                # <-- Los IDs
-)
-
-
-items = {"foo": "The Foo Wrestlers"}
+    itemid: str
+    itemStatus: bool  #Para no recomendar productos no disponibles
 
 @app.get("/")
 async def read_root():
     return {"Hello": "World"}
 
-@app.post("/items/{item_id}")
-async def create_item(item_id: str, item: dict):
-    items[item_id] = item
-    return item
+@app.post("/reindex/")
+async def reindex_producto(item: ProductCreate):
+    
+    text = item.comment
+    cleanText = normalize_text(text)
+    new_vector = model.encode(cleanText).tolist()
+    
+    # 2. Re-construimos los metadatos COMPLETOS
+    new_metadata = {
+        "user_id": item.user_id,
+        "titulo": item.title,
+        "category": item.category,
+        "conditions": item.conditions,
+        "itemStatus": item.itemStatus  # El estado de disponibilidad
+    }
+    
+    # 3. Usamos collection.update() para reemplazar el item
+    try:
+        collection.update(
+            # El ID del documento que queremos reemplazar
+            ids=[item.itemid],       
+            embeddings=[new_vector],     
+            documents=[item.comment],  
+            metadatas=[new_metadata]     
+        )
+        
+        return {
+            "status": "Producto actualizado exitosamente", 
+            "item_id": item.itemid,
+            "nuevo_status_disponible": item.itemStatus
+        }
+    
+    except Exception as e:
+        # Esto puede fallar si el 'itemid' no se encuentra
+        return {
+            "status": "error", 
+            "detalle": f"No se pudo actualizar el item {item.itemid}: {str(e)}"
+        }
 
 #Agregar cada item con embedding y metadatos a Chroma
 @app.post("/add_item/create")
@@ -82,9 +88,10 @@ async def add_item(item: ProductCreate):
     # Aquí es donde guardamos TODO lo demás que queremos usar para filtrar
     metadata_for_chroma = {
         "user_id": item.user_id,
-        "category": item.category,
         "title": item.title,
-        "conditions": item.conditions
+        "category": item.category,
+        "conditions": item.conditions,
+        "itemStatus": item.itemStatus
     }
 
     # 5. Añadimos todo a la colección de Chroma
@@ -93,7 +100,7 @@ async def add_item(item: ProductCreate):
             embeddings=[vector_embedding],      # El vector que creamos
             documents=[text],         # El texto original (para referencia)
             metadatas=[metadata_for_chroma],  # Los filtros
-            ids= [f"item_{len(items)+1}"]                # Un ID único
+            ids = [item.itemid]                # Un ID único
         )
         
         return {
@@ -104,32 +111,37 @@ async def add_item(item: ProductCreate):
     except Exception as e:
         return {"status": "error", "detalle": str(e)}
 
-
+#Busqueda semántica con filtros
 @app.get("/search/")
 async def busqueda_semantica(request: BusquedaRequest):
     
-    text = request.texto
+    text = request.text
     cleanText = normalize_text(text)
     vector_query = model.encode(cleanText)
 
-    filtros = {}
-    if request.categoria:
-        filtros["categoria"] = request.categoria
+    filtros = [
+        {"itemStatus": True}  # Condición base: siempre buscar items disponibles
+    ]
 
-    if filtros:
-        results = collection.query(
-            query_embeddings=[vector_query.tolist()],
-            n_results=1,
-            where=filtros 
-        )
+    if request.category:
+        filtros.append({"category": request.category}) 
+
+    if len(filtros) > 1:
+        filtros_where = {
+            "$and": filtros
+        }
     else:
-        results = collection.query(
-            query_embeddings=[vector_query.tolist()],
-            n_results=1
-        )
+        filtros_where = filtros[0]
+        
+
+    results = collection.query(
+        query_embeddings=[vector_query.tolist()],
+        n_results=3,
+        where=filtros_where  # <-- Usamos el 'where' correctamente formateado
+    )
         
     response_data = {
-        "query_texto_original": request.texto,
+        "query_texto_original": request.text,
         "filtros_aplicados": filtros,
         "resultados_busqueda": results
     }
@@ -160,6 +172,7 @@ def normalize_text(text):
 
 #sentiment_analyzer = pipeline("sentiment-analysis", model="pysentimiento/robertuito-sentiment-analysis")
 
+#ver chromaDB content
 @app.get("/list_documents")
 async def list_documents():
     """
