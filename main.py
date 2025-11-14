@@ -34,6 +34,7 @@ collection = chroma_client.get_or_create_collection(name="comments_collection")
 class BusquedaRequest(BaseModel):
     text: str
     category: Optional[str] = None
+    sentiment_filter: Optional[str] = None
 
 
 class ProductCreate(BaseModel):
@@ -160,7 +161,7 @@ async def reindex_producto(item: ProductCreate):
         collection.update(
             ids=[item.itemid],
             embeddings=[new_vector],
-            documents=[item.comment],
+            documents=[cleanText],
             metadatas=[new_metadata],
         )
 
@@ -178,6 +179,7 @@ async def reindex_producto(item: ProductCreate):
 
 
 # Agregar cada item con embedding y metadatos a Chroma
+#Seria mejor hacerlo como un worker asíncrono
 @app.post("/add_item/create")
 async def add_item(item: ProductCreate):
     text = item.comment
@@ -200,10 +202,10 @@ async def add_item(item: ProductCreate):
     # 5. Añadimos todo a la colección de Chroma
     try:
         collection.add(
-            embeddings=[vector_embedding],  # El vector que creamos
-            documents=[text],  # El texto original (para referencia)
-            metadatas=[metadata_for_chroma],  # Los filtros
-            ids=[item.itemid],  # Un ID único
+            embeddings=[vector_embedding],  
+            documents=[cleanText],  
+            metadatas=[metadata_for_chroma],  
+            ids=[item.itemid],  
         )
 
         return {
@@ -216,19 +218,20 @@ async def add_item(item: ProductCreate):
 
 
 # Busqueda semántica con filtros
-@app.get("/search/")
+@app.post("/search/")
 async def busqueda_semantica(request: BusquedaRequest):
 
     text = request.text
     cleanText = normalize_text(text)
     vector_query = model.encode(cleanText)
-    sentiment_result = sentiment_analyzer(cleanText)
 
     filtros = [{"itemStatus": True}]  
 
     if request.category:
         filtros.append({"category": request.category})
-        filtros.append({"sentiment_label": sentiment_result[0]["label"]})
+
+    if request.sentiment_filter:
+        filtros.append({"sentiment_label": request.sentiment_filter})
 
     if len(filtros) > 1:
         filtros_where = {"$and": filtros}
