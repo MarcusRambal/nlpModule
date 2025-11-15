@@ -10,10 +10,11 @@ import chromadb
 import logging
 import httpx
 
-
 from nltk.corpus import stopwords
 from pydantic import BaseModel
 from typing import Optional
+
+nltk.download("stopwords") # Descargar stopwords si no están ya descargadas (solo la primera vez )
 
 model = SentenceTransformer("distiluse-base-multilingual-cased-v1")
 sentiment_analyzer = pipeline(
