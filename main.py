@@ -62,7 +62,7 @@ async def get_recommendations(user_id: str, category: str | None = None):
 
         vector_history = user_searches.get("embeddings")
 
-        if  vector_history is None:
+        if  vector_history is None or len(vector_history) == 0:
             logger.info(f"No se encontró historial de búsqueda para {user_id}.")
             return {"user_id": user_id, "items_recomendados": []}
         
@@ -122,7 +122,7 @@ async def reindex_producto(item: ProductCreate):
 
     new_metadata = {
         "user_id": item.user_id,
-        "titulo": item.title,
+        "title": item.title,
         "category": item.category,
         "conditions": item.conditions,
         "itemStatus": item.itemStatus,  
