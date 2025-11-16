@@ -1,0 +1,77 @@
+{
+  "total_documents": 9,
+  "documents": [
+    {
+      "id": "8e527efa-8172-4ce5-9df2-8aea1cb0122f",
+      "text": "gustaria intercambiar cosas objetos muebles",
+      "metadata": {
+        "user_id": "user-abc",
+        "category_filter": "hogar"
+      }
+    },
+    {
+      "id": "2d756b18-bbf0-4549-8fa2-50ec9ddb8d0b",
+      "text": "libros fantasia",
+      "metadata": {
+        "user_id": "user-beta",
+        "category_filter": "libros"
+      }
+    },
+    {
+      "id": "b4a51824-96ea-4d8b-80df-d0b4d70d760e",
+      "text": "celulares segunda buen",
+      "metadata": {
+        "user_id": "user-beta",
+        "category_filter": "electronica"
+      }
+    },
+    {
+      "id": "ba1b0350-6927-435e-ba6b-c7ce79f8f141",
+      "text": "monitor curvo",
+      "metadata": {
+        "category_filter": "electronica",
+        "user_id": "user-beta"
+      }
+    },
+    {
+      "id": "d08362e3-3c88-4162-a7b2-ade2518a778d",
+      "text": "monitor curvo",
+      "metadata": {
+        "category_filter": "electronica",
+        "user_id": "user-beta"
+      }
+    },
+    {
+      "id": "57a4a72c-bb60-426c-ad4e-2f3e6a01a79c",
+      "text": "tarjeta grafica",
+      "metadata": {
+        "user_id": "user-beta",
+        "category_filter": "electronica"
+      }
+    },
+    {
+      "id": "47c612cc-7437-4f28-aebe-ceeed9aa9cb7",
+      "text": "monitor curvo",
+      "metadata": {
+        "user_id": "user-beta",
+        "category_filter": "electronica"
+      }
+    },
+    {
+      "id": "385cbdb3-8f1a-44d4-b282-8e6060052080",
+      "text": "busco medias fafwa afafsb ebes asda",
+      "metadata": {
+        "category_filter": "ropa",
+        "user_id": "user-baby"
+      }
+    },
+    {
+      "id": "613f1c58-c6be-4b21-8406-0566fa9f6684",
+      "text": "busco medias fafwa afafsb ebes asda",
+      "metadata": {
+        "user_id": "user-baby",
+        "category_filter": "ropa"
+      }
+    }
+  ]
+}

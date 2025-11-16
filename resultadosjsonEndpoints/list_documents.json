@@ -1,0 +1,149 @@
+{
+  "total_documents": 11,
+  "documents": [
+    {
+      "id": "item-001",
+      "text": "telefono perfecto bateria dura dia vendo regalaron nuevo gran oportunidad",
+      "metadata": {
+        "conditions": "usado",
+        "user_id": "user-abc",
+        "sentiment_label": "NEU",
+        "category": "electronica",
+        "itemStatus": true,
+        "sentiment_score": 0.49507614970207214,
+        "title": "Celular de alta gama casi nuevo"
+      }
+    },
+    {
+      "id": "item-002",
+      "text": "excelente bicicleta empezar ciclismo frenos disco 21 velocidades nunca use regalo",
+      "metadata": {
+        "itemStatus": true,
+        "title": "Bicicleta de montaña",
+        "category": "deportes",
+        "sentiment_score": 0.7714624404907227,
+        "user_id": "user-xyz",
+        "conditions": "nuevo",
+        "sentiment_label": "POS"
+      }
+    },
+    {
+      "id": "item-003",
+      "text": "sofa cama 3 puestos comodo uso pequena mancha cojin izquierdo funciona perfecto",
+      "metadata": {
+        "user_id": "user-abc",
+        "sentiment_label": "POS",
+        "title": "Sofá cama",
+        "conditions": "usado",
+        "category": "hogar",
+        "itemStatus": false,
+        "sentiment_score": 0.5075246691703796
+      }
+    },
+    {
+      "id": "item-004",
+      "text": "cargador basura dejo funcionar despues semana compren producto terrible mala calidad",
+      "metadata": {
+        "conditions": "dañado",
+        "sentiment_label": "NEG",
+        "category": "electronica",
+        "title": "Cargador de portátil",
+        "sentiment_score": 0.9689684510231018,
+        "user_id": "user-123",
+        "itemStatus": true
+      }
+    },
+    {
+      "id": "item-005",
+      "text": "mesa noche madera pino mide 50cm alto 40cm ancho dos cajones",
+      "metadata": {
+        "category": "hogar",
+        "user_id": "user-xyz",
+        "title": "Mesa de noche de madera",
+        "sentiment_label": "NEU",
+        "itemStatus": true,
+        "sentiment_score": 0.8498631119728088,
+        "conditions": "buen estado"
+      }
+    },
+    {
+      "id": "item-006",
+      "text": "libro ciencia ficcion increible trama compleja personajes profundos totalmente recomendado",
+      "metadata": {
+        "conditions": "nuevo",
+        "sentiment_score": 0.9221901893615724,
+        "itemStatus": true,
+        "sentiment_label": "POS",
+        "category": "libros",
+        "user_id": "user-gamma",
+        "title": "Novela de Ciencia Ficción"
+      }
+    },
+    {
+      "id": "item-007",
+      "text": "bicicleta estatica hacer ejercicio casa nueva use dos veces medidor pulso pantalla digital",
+      "metadata": {
+        "category": "hogar",
+        "sentiment_score": 0.7821734547615051,
+        "itemStatus": true,
+        "conditions": "casi nuevo",
+        "user_id": "user-beta",
+        "sentiment_label": "NEU",
+        "title": "Bicicleta estática"
+      }
+    },
+    {
+      "id": "item-008",
+      "text": "zapatillas deportivas talla 38 9 talla uk nuevas excelentes correr",
+      "metadata": {
+        "itemStatus": true,
+        "category": "deporte",
+        "conditions": "Nuevas",
+        "sentiment_label": "POS",
+        "user_id": "user-abc",
+        "sentiment_score": 0.8444597125053406,
+        "title": "Monitor Curvo 27 pulgadas",
+        "titulo": "Zapatillas deportivas"
+      }
+    },
+    {
+      "id": "item-009",
+      "text": "tela mala calidad rompio primera lavada recomiendo producto decepcionante",
+      "metadata": {
+        "user_id": "user-gamma",
+        "category": "ropa",
+        "itemStatus": true,
+        "title": "Chaqueta de invierno",
+        "conditions": "nuevo",
+        "sentiment_label": "NEG",
+        "sentiment_score": 0.9736323356628418
+      }
+    },
+    {
+      "id": "item-010",
+      "text": "libro cocina recetas postres platos fuertes fotos bonitas vendo lei",
+      "metadata": {
+        "conditions": "usado",
+        "category": "libros",
+        "sentiment_score": 0.6465603113174438,
+        "user_id": "user-beta",
+        "itemStatus": true,
+        "sentiment_label": "POS",
+        "title": "Libro de Recetas"
+      }
+    },
+    {
+      "id": "item-011",
+      "text": "vestido elegante mujer color negro eventos especiales",
+      "metadata": {
+        "user_id": "user-baby",
+        "itemStatus": true,
+        "sentiment_label": "POS",
+        "conditions": "Nuevas",
+        "category": "ropa",
+        "sentiment_score": 0.5808071494102478,
+        "title": "Lindo vestido de mujer para eventos"
+      }
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "query_texto_original": "Busco, medias fafwa para   afafsb ebes asda",
+  "filtros_aplicados": [
+    {
+      "itemStatus": true
+    },
+    {
+      "category": "ropa"
+    }
+  ],
+  "resultados_busqueda": {
+    "ids": [
+      [
+        "item-011",
+        "item-009"
+      ]
+    ],
+    "embeddings": null,
+    "documents": [
+      [
+        "medias bebes recien nacidos",
+        "tela mala calidad rompio primera lavada recomiendo producto decepcionante"
+      ]
+    ],
+    "uris": null,
+    "included": [
+      "metadatas",
+      "documents",
+      "distances"
+    ],
+    "data": null,
+    "metadatas": [
+      [
+        {
+          "conditions": "nuevo",
+          "category": "ropa",
+          "itemStatus": true,
+          "sentiment_score": 0.7096490263938904,
+          "title": "Medias para bebes",
+          "user_id": "user-baby",
+          "sentiment_label": "NEU"
+        },
+        {
+          "user_id": "user-gamma",
+          "sentiment_label": "NEG",
+          "category": "ropa",
+          "conditions": "nuevo",
+          "sentiment_score": 0.9736323356628418,
+          "itemStatus": true,
+          "title": "Chaqueta de invierno"
+        }
+      ]
+    ],
+    "distances": [
+      [
+        0.6881009340286255,
+        1.3175534009933472
+      ]
+    ]
+  }
+}

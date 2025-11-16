@@ -1,0 +1,12 @@
+{
+  "status": "Producto añadido y embebido exitosamente",
+  "producto_guardado": {
+    "title": "Medias para bebes",
+    "category": "ropa",
+    "conditions": "nuevo",
+    "comment": "Medias para bebes recien nacidos.",
+    "user_id": "user-baby",
+    "itemid": "item-011",
+    "itemStatus": true
+  }
+}
